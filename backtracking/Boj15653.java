@@ -9,10 +9,13 @@ import java.util.Queue;
 
 
 public class Boj15653 {
-    static Queue<Location> queue = new LinkedList<>();
+    static Queue<Location> redQueue = new LinkedList<>();
+    static Queue<Location> blueQueue = new LinkedList<>();
     static String[][] graph;
     static int[] dy = {-1, 1, 0, 0};
     static int[] dx = {0, 0, -1, 1};
+    static int holeX = -1;
+    static int holeY = -1;
 
     public static void main(String[] args) throws IOException {
 
@@ -24,15 +27,52 @@ public class Boj15653 {
             String[] add = br.readLine().split("");
             for (int j = 0; j < arr[1]; j++) {
                 graph[i][j] = add[j];
-                if (graph[i][j].equals("R")) queue.add(new Location(j, i, 1));
-                if (graph[i][j].equals("B")) queue.add(new Location(j, i, 0));
+                if (graph[i][j].equals("R")) redQueue.add(new Location(j, i));
+                if (graph[i][j].equals("B")) blueQueue.add(new Location(j, i));
+                if (graph[i][j].equals("O")) {
+                    holeX = j;
+                    holeY = i;
+                }
             }
-            while (!queue.isEmpty()) {
-                Location redNow = queue.poll();
-                Location bluewNow = queue.poll();
+            while (!redQueue.isEmpty()) {
+                Location redNow = redQueue.poll();
+                Location bluewNow = blueQueue.poll();
+                int nowRedX = redNow.getX();
+                int nowRedY = redNow.getY();
+                int nowBlueX = bluewNow.getX();
+                int nowBLueY = bluewNow.getY();
+
                 for (int j = 0; j < 4; j++) {
-                    int nextRedX = redNow.getX();
-                    int nextRedY = redNow.getY();
+                    int nextRedX = nowRedX + dx[i];
+                    int nextRedY = nowRedY + dy[i];
+                    int nextBlueX = nowBlueX + dx[i];
+                    int nextBlueY = nowBLueY + dy[i];
+
+                    while (true) {
+                        if (graph[nowRedY][nowRedX].equals("#")) {
+                            nextRedX -= dx[i];
+                            nextRedY -= dy[i];
+                            break;
+                        }
+                        if (graph[nowRedY][nowRedX].equals("O")) {
+                            break;
+                        }
+                        nextRedX += dx[i];
+                        nextRedY += dy[i];
+                    }
+                    while (true) {
+                        if (graph[nextBlueY][nextBlueX].equals("#")) {
+                            nextBlueX -= dx[i];
+                            nextBlueY -= dy[i];
+                            break;
+                        }
+                        if (graph[nextBlueY][nextBlueX].equals("O")) {
+                            break;
+                        }
+                        nextBlueX += dx[i];
+                        nextBlueY += dy[i];
+                    }
+
 
                 }
             }
@@ -44,17 +84,12 @@ public class Boj15653 {
     static class Location {
         int x;
         int y;
-        int value;
 
-        public Location(int x, int y, int value) {
+        public Location(int x, int y) {
             this.x = x;
             this.y = y;
-            this.value = value;
         }
 
-        public int getValue() {
-            return value;
-        }
 
         public int getX() {
             return x;
