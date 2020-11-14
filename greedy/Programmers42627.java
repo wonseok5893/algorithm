@@ -35,6 +35,6 @@ public class Programmers42627 {
                 end+=jobs[pos][1]+jobs[pos][0];
                 count++;
             }
-        }
+        }return 0;
     }
 }
