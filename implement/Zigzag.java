@@ -19,7 +19,7 @@ public class Zigzag {
         //4 13 18 21
         //15 16 23 24
 
-        solution(4, true);
+        solution(9, false);
     }
 
     private static void solution(int n, boolean horizontal) {
