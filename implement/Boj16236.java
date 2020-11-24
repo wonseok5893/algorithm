@@ -1,3 +1,4 @@
+
 package com.wonseok.implement;
 
 import com.sun.org.apache.xpath.internal.operations.String;
@@ -25,14 +26,14 @@ public class Boj16236 {
             for (int j = 0; j < n; j++) {
                 int num = Integer.parseInt(st.nextToken());
                 if (9 > num && num > 0)
-                    list.add(new Fish(j,i,num));
-                if(num==9) baby = new Fish(j,i,num);
-                    map[i][j] = num;
+                    list.add(new Fish(j, i, num));
+                if (num == 9) baby = new Fish(j, i, num);
+                map[i][j] = num;
             }
         }
         /// 초기화
-        int[] dx = {0,0,-1,1};
-        int[] dy = {-1,1,0,0};
+        int[] dx = {0, 0, -1, 1};
+        int[] dy = {-1, 1, 0, 0};
 
 
     }
