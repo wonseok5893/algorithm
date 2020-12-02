@@ -26,7 +26,7 @@ public class Boj2580 {
                 }
                 System.out.println();
             }
-            return 0;
+            System.exit(0);
         }
         if(col==9){
             backTracking(row+1,0);
