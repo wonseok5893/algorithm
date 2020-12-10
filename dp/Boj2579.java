@@ -26,3 +26,5 @@ public class Boj2579 {
         System.out.println(dp[n]);
     }
 }
+// 5  =  1,2,3
+// 1 1 1 1 1 1+1+1+2 1+1+3 2+3
