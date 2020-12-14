@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 package dp;
 
@@ -49,5 +48,3 @@ public class Boj1003 {
         return 0;
     }
 }
-=======
->>>>>>> eba539b0709946a0eb9ca0c96d6713c1a65665f5
