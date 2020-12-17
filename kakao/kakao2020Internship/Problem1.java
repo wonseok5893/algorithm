@@ -1,9 +1,9 @@
-package kakao;
+package kakao.kakao2020Internship;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Kakao2020Internship {
+public class Problem1 {
     //키패드 누르기
     //https://programmers.co.kr/learn/courses/30/lessons/67256
     // 엄지손가락 상하좌우 1씩
