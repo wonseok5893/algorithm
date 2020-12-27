@@ -4,7 +4,7 @@ import java.util.Stack;
 
 public class Problem1 {
     public static void main(String[] args) {
-        new Problem1().solution()
+
     }
     static int ans;
     public int solution(int[][] board, int[] moves) {
