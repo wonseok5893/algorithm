@@ -1,13 +1,14 @@
 package sort;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class 가장큰수 {
     public static void main(String[] args) {
-        new 가장큰수().solution(new int[]{0,0,0,0});
-        System.out.println(ans);
+        String solution = new 가장큰수().solution(new int[]{2, 11, 23, 123});
+        System.out.println(solution);
     }
-    static String ans;
+
     public String solution(int[] numbers) {
         Integer[] number = Arrays.stream(numbers).boxed().toArray(Integer[]::new);
 
@@ -16,9 +17,10 @@ public class 가장큰수 {
             String eStr = String.valueOf(e);
             return (eStr+aStr).compareTo(aStr+eStr);
         });
-        ans = "";
+
         if(Arrays.stream(number).allMatch(e->e==0))return "0";
-        Arrays.stream(number).forEach(e->ans+=e);
-        return ans;
+        return Arrays.stream(number).map(String::valueOf).collect(Collectors.joining(""));
+
+
     }
 }
