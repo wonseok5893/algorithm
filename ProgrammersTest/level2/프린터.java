@@ -1,4 +1,4 @@
-package kakao.level2;
+package ProgrammersTest.level2;
 
 import java.util.ArrayList;
 import java.util.Queue;

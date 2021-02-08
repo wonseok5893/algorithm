@@ -1,8 +1,6 @@
-package kakao.level2;
+package ProgrammersTest.level2;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class 행렬의곱셈Test {
     @Test

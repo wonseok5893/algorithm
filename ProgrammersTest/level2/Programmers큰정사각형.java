@@ -1,4 +1,4 @@
-package com.wonseok.kakao.level2;
+package ProgrammersTest.level2;
 
 public class Programmers큰정사각형 {
     public static void main(String[] args) {

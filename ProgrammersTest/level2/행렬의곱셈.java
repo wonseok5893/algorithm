@@ -1,4 +1,4 @@
-package kakao.level2;
+package ProgrammersTest.level2;
 
 public class 행렬의곱셈 {
     public static void main(String[] args) {

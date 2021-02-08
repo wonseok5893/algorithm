@@ -1,4 +1,4 @@
-package com.wonseok.kakao.level2;
+package ProgrammersTest.level2;
 
 import java.util.LinkedList;
 import java.util.Queue;
