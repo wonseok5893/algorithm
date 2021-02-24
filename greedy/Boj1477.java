@@ -34,6 +34,7 @@ public class Boj1477 {
                     }
                 }
         );
+        Arrays.stream(gasStations).forEach(System.out::print);
         queue.offer(gasStations[0]);
         for (int i = 0; i < n-1; i++) {
             queue.offer(gasStations[i+1]-gasStations[i]);
@@ -42,16 +43,18 @@ public class Boj1477 {
 
         while(addCount>0&&!queue.isEmpty()){
             int poll = queue.poll();
+            System.out.println(poll);
             if(poll%2==0) {
+                System.out.println(poll/2+" 두 개로 나누어서 넣는다");
                 queue.offer(poll / 2);
                 queue.offer(poll / 2);
             }else{
+                System.out.println(poll/2+" 1 개와 "+(poll/2+1)+" 1개로 나누어서 넣는다");
                 queue.offer(poll/2);
-                queue.offer(poll/2+1);
+                queue.offer((poll/2+1));
             }
             addCount--;
         }
-
         System.out.println(queue.poll());
     }
 }

@@ -6,30 +6,63 @@
 
 <pre>
 <code>
-    ※ 노드 개수: 6 간선 개수 : 11
-    ※ 1번 노드 기준
-    ※ 가중치 G
-    ※ 간선: 1 -> 2 (G: 2)
-            1 -> 3 (G: 5) 
-            1 -> 4 (G: 1) 
-            2 -> 3 (G: 3) 
-            2 -> 2 (G: 2) 
-            3 -> 2 (G: 3)
-            3 -> 6 (G: 5)
-            4 -> 3 (G: 3)
-            4 -> 5 (G: 1)
-            5 -> 3 (G: 1)
-            5 -> 6 (G: 2)
-      
-      // 거리 배열 초기화
-      int[] distance = new int[n+1];
-      for(int i=1;i<=n;i++) distance[i] = (int)1e9
-      // 방문 처리 배열 초기화
-      boolean[] visited = new boolean[n+1];
-      
-      
-      
-      
-       
+     private static void daikstra(int startNode) {
+            PriorityQueue<Node> queue = new PriorityQueue<>();
+            boolean[]check = new boolean[v+1];
+            queue.add(new Node(startNode,0));
+            distance[startNode] = 0;
+    
+            while(!queue.isEmpty()){
+                Node next = queue.poll();
+                int nextEnd = next.end;
+                if(check[nextEnd] == true)continue;
+                check[nextEnd] = true;
+                for (Node node : graph[nextEnd]) {
+                    if(distance[node.end]>distance[nextEnd]+node.weight){
+                        distance[node.end] = distance[nextEnd]+node.weight;
+                        queue.add(new Node(node.end,distance[node.end]));
+                    }
+                }
+            }
+    
+ 
+</code>
+</pre>
+방문하지 않은 가장 작은 가중치 선형 검색-> O(V^2)
+우선순위 큐(힙)->O(E * log V)
+
+# 플로이드 워셜
+O(N^3)
+<pre>
+<code>
+private static int[][] floydwarshall(int n, int[][] edges) {
+        int[][]table = new int[n+1][n+1];
+        for (int[] arr : table) {
+            Arrays.fill(arr, (int)1e9+7);
+        }
+        for (int[] info : edges) {
+            int start = info[0];
+            int end = info[1];
+            int weight = info[2];
+            //초기 테이블 갱신
+            table[start][end] = weight;
+        }
+        for (int i = 1; i <=n ; i++) {
+            table[i][i] = 0;
+        }
+        // 자기 노드-> 자기노드 0으로 초기화
+
+        for (int k = 1; k <=n ; k++) {
+            for (int a = 1; a <=n ; a++) {
+                if(k==a)continue;
+                for (int b = 1; b <=n ; b++) {
+                    if(b==a||b==k)continue;
+                    table[a][b] = Math.min(table[a][b],table[a][k]+table[k][b]);
+                }
+            }
+        }
+        /// step 1 ~N까지 nP2만큼 a-> b > a->k + k->b
+        return table;
+    }
 </code>
 </pre>

@@ -1,4 +1,4 @@
-package com.wonseok.daikstra;
+package daikstra;
 
 import java.io.BufferedReader;
 import java.io.IOException;
