@@ -9,6 +9,7 @@ public class Boj20167 {
     static int k;
     static int[] arr;
     static int ans;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
@@ -24,21 +25,32 @@ public class Boj20167 {
 
         // n<=20
         go(0, 0, 0);
+//
+//        int[][][] dp = new int[n+1][2][2];
+//
+//        //dp[i][j] =  i번째를 먹느냐 안먹느냐
+//        for (int i = 1; i < n; i++) {
+//
+//        }
+
+
         System.out.println(ans);
 
     }
 
     private static void go(int start, int sum, int value) {
-        if (start >= arr.length){
+        if (start >= arr.length) {
             ans = Math.max(ans, value);
             return;
         }
-        // 안먹고 다음거
-        go(start + 1, sum, value);
-        if(sum+arr[start]>=k) go(start + 1, 0, value +
-                sum + arr[start] - k);
+        // 먹고
+        if (sum + arr[start] >= k)
+            go(start + 1, 0, value + sum + arr[start] - k);
         else
             go(start + 1, sum + arr[start], value);
+        // 안 먹고
+        go(start + 1, 0 ,value);
     }
+
 
 }
