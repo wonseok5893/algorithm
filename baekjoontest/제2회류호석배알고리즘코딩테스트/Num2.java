@@ -1,10 +1,7 @@
 package baekjoontest.제2회류호석배알고리즘코딩테스트;
 
-import com.sun.scenario.effect.impl.state.AccessHelper;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Num2 {
@@ -19,55 +16,115 @@ public class Num2 {
         //haeun doha
         //doha minji
         //haeun minji
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        ArrayList<String> lists = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            lists.add(st.nextToken());
-        }
-        int m = Integer.parseInt(br.readLine());
-
-        // 인접 리스트
-        Map<String, ArrayList<String>> map = new HashMap<>();
+        FastReader sc = new FastReader();
+        int n = sc.nextInt();
+        ArrayList<String> people = new ArrayList<>();
         Map<String, Integer> degree = new HashMap<>();
-        for (int i = 0; i < m; i++) {
-            st = new StringTokenizer(br.readLine(), " ");
-            String child = st.nextToken();
-            String ancestor = st.nextToken();
-            if (map.get(child) == null) {
-                ArrayList<String> ancestors = new ArrayList<>();
-                ancestors.add(ancestor);
-                map.put(child,ancestors);
-            }else{
-                map.get(child).add(ancestor);
-            }
-            if(degree.get(ancestor)==null){
-                degree.put(ancestor, 1);
-            } else degree.put(ancestor, degree.get(ancestor) + 1);
-        }
-
-        //위상 정렬
-        Map<String, Integer> visited = new HashMap<>();
-        Queue<String> queue = new LinkedList<>();
-        // 차수가 0인 사람 큐에넣어
-        addZeroDegreePeson(n, lists, degree, visited, queue);
-
-
-
-        while (!queue.isEmpty()) {
-            String poll = queue.poll();
-        }
-
-
-    }
-
-    private static void addZeroDegreePeson(int n, ArrayList<String> lists, Map<String, Integer> degree, Map<String, Integer> visited, Queue<String> queue) {
+        Map<String, ArrayList<String>> adjList = new HashMap<>();
         for (int i = 0; i < n; i++) {
-            if(visited.get(lists.get(i))!=null) continue;
-            if(degree.getOrDefault(lists.get(i), 0)==0)
-                queue.offer(lists.get(i));
+            String name = sc.next();
+            people.add(name);
+            degree.put(name, 0);
+            degree.put(name, 0);
+            adjList.put(name, new ArrayList<>());
+        }
+
+        int m = sc.nextInt();
+        for (int i = 0; i < m; i++) {
+            String child = sc.next();
+            String ancestor = sc.next();
+            degree.put(child, degree.get(child) + 1);
+            adjList.get(ancestor).add(child);
+        }
+
+        Queue<String> queue = new LinkedList<>();
+        ArrayList<String> roots = new ArrayList<>();
+        //제일 아래 자손
+        for (String name : people) {
+            if(degree.get(name)==0) {
+                queue.offer(name);
+                roots.add(name);
+            }
+        }
+        //바로 자식 수
+        Map<String, ArrayList<String>> ans = new HashMap<>();
+        while(!queue.isEmpty()){
+            //위상 정렬을 해보자
+            //root를 지우고 간선을 지우고 degree가 0인 사람
+            String anscestor = queue.poll();
+            ArrayList<String> children = new ArrayList<>();
+            for (String s : adjList.get(anscestor)) {
+                int value = degree.get(s) - 1;
+                degree.put(s, value);
+                if(value==0) {
+                    queue.offer(s);
+                    children.add(s);
+                }
+            }
+            ans.put(anscestor, children);
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(roots.size() + "\n");
+        Collections.sort(roots);
+        for (String root : roots) {
+            sb.append(root + " ");
+        }
+        sb.append("\n");
+        Collections.sort(people);
+        for (String person : people) {
+            sb.append(person + " ");
+            sb.append(ans.get(person).size()+" ");
+            Collections.sort(ans.get(person));
+            for (String s : ans.get(person)) {
+                sb.append(s + " ");
+            }
+            sb.append("\n");
+        }
+        System.out.println(sb);
+    }
+    static class FastReader {
+        BufferedReader br;
+        StringTokenizer st;
+
+        public FastReader() {
+            br = new BufferedReader(new InputStreamReader(System.in));
+        }
+
+        public FastReader(String s) throws FileNotFoundException {
+            br = new BufferedReader(new FileReader(new File(s)));
+        }
+
+        String next() {
+            while (st == null || !st.hasMoreElements()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        long nextLong() {
+            return Long.parseLong(next());
+        }
+
+        double nextDouble() {
+            return Double.parseDouble(next());
+        }
+
+        String nextLine() {
+            String str = "";
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return str;
         }
     }
 }
