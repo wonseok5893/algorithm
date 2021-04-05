@@ -6,35 +6,38 @@ import java.util.*;
 public class Boj14425 {
     public static void main(String[] args) {
         FastReader sc = new FastReader();
-        int k = 240001;
-        int n = 1000000;
-        ArrayList<Integer> ans = new ArrayList<>();
-        for (int i = 2; i <= n; i++) {
-            ans.add(i);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+
+        ArrayList<String> S = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            String str = sc.next();
+            S.add(str);
         }
-        Collections.sort(ans, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                int a = findMinMax(o1);
-                int b = findMinMax(o2);
-                if(a < b){
-                    return 1;
-                }else if(a==b){
-                    return o2-o1;
-                }
-                return -1;
-            }
-        });
-        System.out.println(ans.get(k-1));
+        Collections.sort(S);
+        int ans = 0;
+        for (int i = 0; i < m; i++) {
+            String target = sc.next();
+            if(binarySearch(S, target))
+                ans++;
+        }
+        System.out.println(ans);
     }
 
-    private static int findMinMax(int i) {
-        for (int j = 2; j <=i; j++) {
-            if (i % j == 0) {
-                return j;
+    private static boolean binarySearch(ArrayList<String> s, String target) {
+        int start = 0;
+        int end = s.size() - 1;
+        while (start <= end) {
+            int mid = (start + end) / 2;
+            int compare = s.get(mid).compareTo(target);
+            if(compare<0){
+                start = mid+1;
+            }else{
+                if(compare==0)return true;
+                end = mid-1;
             }
         }
-        return -1;
+        return false;
     }
 
 
