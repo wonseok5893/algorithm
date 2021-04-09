@@ -39,15 +39,21 @@ public class Boj7453 {
         }
         Arrays.sort(AB);
         Arrays.sort(CD);
+
+        solutionBinarySearch(n, arr);
+    }
+
+    private static void solutionBinarySearch(int n, long[][] arr) {
+
         // 160,000 AB
         // 160,000 CD
         // -> 이분탐색 NlogN
         long sum = 0;
-        for (long target: AB) {
+        for (long target : AB) {
             int upperIdx = upperBound(-target);
             int lowerIdx = lowerBound(-target);
-            if(upperIdx==-1)continue;
-            sum+=(upperIdx-lowerIdx)+1;
+            if (upperIdx == -1) continue;
+            sum += (upperIdx - lowerIdx) + 1;
         }
         System.out.println(sum);
     }
