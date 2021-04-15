@@ -6,9 +6,9 @@ import java.util.*;
 public class Boj16964 {
     static ArrayList<Integer>[] adjList;
     static int[] target;
-    static int targetPos =1;
+    static int[] order;
     static boolean[] visit;
-    static boolean res = true;
+    static ArrayList<Integer> ans = new ArrayList<>();
     public static void main(String[] args) {
         FastReader sc = new FastReader();
         int n = sc.nextInt();
@@ -18,6 +18,7 @@ public class Boj16964 {
         }
         target = new int[n];
         visit = new boolean[n+1];
+        order = new int[n + 1];
         while (true) {
             int[] arr = Arrays.stream(sc.nextLine().split(" "))
                     .mapToInt(Integer::parseInt).toArray();
@@ -26,8 +27,14 @@ public class Boj16964 {
                 adjList[arr[1]].add(arr[0]);
             } else {
                 target = arr;
+                for (int i = 0; i < target.length; i++) {
+                    order[target[i]] = i;
+                }
                 break;
             }
+        }
+        for (int i = 1; i <=n ; i++) {
+            Collections.sort(adjList[i], (o1, o2) -> order[o1] - order[o2]);
         }
         if (target[0] != 1) {
             System.out.println(0);
@@ -35,24 +42,24 @@ public class Boj16964 {
         }
 
         dfs(1);
+        boolean res = true;
+        for (int i = 0; i < target.length; i++) {
+            if(ans.get(i)!=target[i]){
+                res = false;
+                break;
+            }
+        }
         if(res) System.out.println(1);
         else System.out.println(0);
+
     }
 
     private static void dfs(int start) {
-        if(visit[start])return;
         visit[start] = true;
-        Set<Integer> set = new HashSet<>();
+        ans.add(start);
         for (int next : adjList[start]) {
             if(visit[next]) continue;
-            set.add(next);
-        }
-        if(set.size()==0) return;
-
-        if (set.contains(target[targetPos])) {
-            dfs(target[targetPos++]);
-        }else{
-            res = false;
+            dfs(next);
         }
     }
 
